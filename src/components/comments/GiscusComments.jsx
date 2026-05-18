@@ -6,10 +6,10 @@ export default function GiscusComments() {
 
   return (
     <Giscus
-      repo="your-username/your-repo"
-      repoId="YOUR_REPO_ID"
+      repo="dakebubi-7/blog"
+      repoId="R_kgDOSgr7Mw"
       category="Announcements"
-      categoryId="YOUR_CATEGORY_ID"
+      categoryId="DIC_kwDOSgr7M84C9TMk"
       mapping="pathname"
       theme={theme === 'dark' ? 'dark' : 'light'}
       reactionsEnabled="1"
