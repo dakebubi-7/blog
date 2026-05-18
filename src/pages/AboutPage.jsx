@@ -1,6 +1,5 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import matter from 'gray-matter';
 import '../styles/markdown.css';
 
 const aboutFiles = import.meta.glob('../../content/about.md', {
@@ -10,7 +9,7 @@ const aboutFiles = import.meta.glob('../../content/about.md', {
 });
 
 const aboutRaw = Object.values(aboutFiles)[0] || '';
-const { content } = matter(aboutRaw);
+const content = aboutRaw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
 
 export default function AboutPage() {
   return (

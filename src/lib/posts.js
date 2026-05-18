@@ -1,5 +1,3 @@
-import matter from 'gray-matter';
-
 const POSTS_PER_PAGE = 6;
 
 const rawPosts = import.meta.glob('/content/posts/*.md', {
@@ -8,12 +6,43 @@ const rawPosts = import.meta.glob('/content/posts/*.md', {
   import: 'default',
 });
 
+function parseFrontmatter(raw) {
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  if (!match) return { data: {}, content: raw };
+
+  const yamlStr = match[1];
+  const content = match[2];
+  const data = {};
+
+  for (const line of yamlStr.split('\n')) {
+    const colonIdx = line.indexOf(':');
+    if (colonIdx === -1) continue;
+    const key = line.slice(0, colonIdx).trim();
+    let value = line.slice(colonIdx + 1).trim();
+
+    if (value.startsWith('[') && value.endsWith(']')) {
+      value = value
+        .slice(1, -1)
+        .split(',')
+        .map((v) => v.trim().replace(/^["']|["']$/g, ''));
+    } else if (value === 'true') {
+      value = true;
+    } else if (value === 'false') {
+      value = false;
+    }
+
+    data[key] = value;
+  }
+
+  return { data, content };
+}
+
 function parsePosts() {
   const posts = [];
 
   for (const [path, raw] of Object.entries(rawPosts)) {
     const slug = path.replace('/content/posts/', '').replace('.md', '');
-    const { data, content } = matter(raw);
+    const { data, content } = parseFrontmatter(raw);
 
     if (import.meta.env.PROD && data.draft) continue;
 
@@ -23,7 +52,7 @@ function parsePosts() {
         title: data.title || slug,
         date: data.date || '',
         category: data.category || '',
-        tags: data.tags || [],
+        tags: Array.isArray(data.tags) ? data.tags : [],
         excerpt: data.excerpt || '',
         draft: data.draft || false,
       },
