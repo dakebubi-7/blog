@@ -1,12 +1,18 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import aboutRaw from '../../content/about.md?raw';
-import { matter } from 'gray-matter';
+import matter from 'gray-matter';
 import '../styles/markdown.css';
 
-export default function AboutPage() {
-  const { content } = matter(aboutRaw);
+const aboutFiles = import.meta.glob('../../content/about.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
 
+const aboutRaw = Object.values(aboutFiles)[0] || '';
+const { content } = matter(aboutRaw);
+
+export default function AboutPage() {
   return (
     <div>
       <h1 style={{ marginBottom: '1.5rem' }}>关于我</h1>
