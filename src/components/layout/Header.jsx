@@ -11,7 +11,8 @@ export default function Header() {
   const navLinks = [
     { to: '/', label: '首页' },
     { to: '/category/技术', label: '技术' },
-    { to: '/tag/随笔', label: '随笔' },
+    { to: '/category/随笔', label: '随笔' },
+    { to: '/category/AI学习', label: 'AI学习' },
     { to: '/about', label: '关于' },
   ];
 

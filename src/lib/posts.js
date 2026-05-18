@@ -18,7 +18,7 @@ function parseFrontmatter(raw) {
     const colonIdx = line.indexOf(':');
     if (colonIdx === -1) continue;
     const key = line.slice(0, colonIdx).trim();
-    let value = line.slice(colonIdx + 1).trim();
+    let value = line.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
 
     if (value.startsWith('[') && value.endsWith(']')) {
       value = value
