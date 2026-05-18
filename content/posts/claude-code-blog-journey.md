@@ -1,7 +1,7 @@
 ---
 title: "从零开始：用 Claude Code 搭建个人博客"
 date: "2026-05-19"
-category: "AI学习相关"
+category: "AI学习"
 tags: ["博客", "Claude Code", "Vercel", "Git", "学习笔记"]
 excerpt: "记录过去20小时内，我如何用 Claude Code 搭建并维护一个技术博客的全过程。"
 ---
